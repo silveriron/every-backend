@@ -1,5 +1,6 @@
 package com.every.everybackend.users.service;
 
+import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.repository.UserRepository;
 import com.every.everybackend.users.repository.entity.UserEntity;
 import com.every.everybackend.users.repository.entity.enums.UserProvider;
@@ -7,6 +8,9 @@ import com.every.everybackend.users.repository.entity.enums.UserRole;
 import com.every.everybackend.users.repository.entity.enums.UserStatus;
 import com.every.everybackend.users.service.command.CreateUserCommand;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
@@ -41,7 +45,16 @@ public class UserService {
         .build();
 
     userRepository.save(userEntity);
+  }
 
-    return;
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    Optional<UserEntity> existUser = userRepository.findByEmail(email);
+
+    if (existUser.isEmpty()) {
+      throw new UsernameNotFoundException("존재하지 않는 이메일입니다.");
+    }
+
+    return new CustomUserDetails(existUser.get());
   }
 }
