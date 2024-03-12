@@ -4,15 +4,13 @@ import com.every.everybackend.users.controller.dto.LoginUserRequest;
 import com.every.everybackend.users.controller.dto.SignupUserRequest;
 import com.every.everybackend.users.service.UserService;
 import com.every.everybackend.users.service.command.CreateUserCommand;
+import com.every.everybackend.users.service.command.EmailVerificationCommand;
 import com.every.everybackend.users.service.command.LoginUserCommand;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/users")
@@ -35,6 +33,25 @@ public class UserController {
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
+
+  @GetMapping("/email-verification")
+  public void verifyEmail(
+          @RequestParam("email") String email,
+            @RequestParam("code") String code
+  ) {
+
+    EmailVerificationCommand command = new EmailVerificationCommand(email, code);
+
+    userService.verifyEmail(command);
+
+  }
+
+  @PostMapping("/password-recovery-code")
+  public void sendPasswordRecoveryCode() {}
+
+  @PostMapping("/reset-password")
+  public void resetPassword() {}
+
   @PostMapping("/login")
   public String login(
           @Valid
@@ -43,10 +60,12 @@ public class UserController {
 
     LoginUserCommand command = new LoginUserCommand(request.email(), request.password());
 
-  return userService.login(command);
-
+    return userService.login(command);
   }
 
+  @PutMapping
+  public void updateUser() {}
 
-
+  @DeleteMapping
+  public void deleteUser() {}
 }

@@ -35,13 +35,14 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserProvider provider;
     private String providerId;
+    private String verifyCode;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @Builder
-    public UserEntity(String email, String password, String name, String image, UserRole role, UserStatus status, UserProvider provider, String providerId) {
+    public UserEntity(String email, String password, String name, String image, UserRole role, UserStatus status, UserProvider provider, String providerId, String verifyCode) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -50,5 +51,6 @@ public class UserEntity {
         this.status = status;
         this.provider = provider;
         this.providerId = providerId;
+        this.verifyCode = verifyCode;
     }
 }

@@ -10,7 +10,9 @@ import com.every.everybackend.users.repository.entity.enums.UserProvider;
 import com.every.everybackend.users.repository.entity.enums.UserRole;
 import com.every.everybackend.users.repository.entity.enums.UserStatus;
 import com.every.everybackend.users.service.command.CreateUserCommand;
+import com.every.everybackend.users.service.command.EmailVerificationCommand;
 import com.every.everybackend.users.service.command.LoginUserCommand;
+import com.every.everybackend.users.utils.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +29,7 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final AuthenticationManager authenticationManager;
   private final JwtAdapter jwtAdapter;
+  private final CodeGenerator codeGenerator;
 
 
   public void createUser(CreateUserCommand command) {
@@ -39,6 +42,8 @@ public class UserService {
 
     String encoded = passwordEncoder.encode(command.password());
 
+    String code = codeGenerator.generateCode(8);
+
 
     UserEntity userEntity = UserEntity.builder()
         .email(command.email())
@@ -48,7 +53,7 @@ public class UserService {
         .role(UserRole.USER)
         .status(UserStatus.UNVERIFIED)
         .provider(UserProvider.EMAIL)
-        .providerId(null)
+        .providerId(null).verifyCode(code)
         .build();
 
     userRepository.save(userEntity);
@@ -65,5 +70,28 @@ public class UserService {
     return jwtAdapter.createToken(userDetails.getUsername());
 
 
+  }
+
+  public void verifyEmail(EmailVerificationCommand command) {
+    Optional<UserEntity> optional = userRepository.findByEmail(command.email());
+
+    if (optional.isEmpty()) {
+      throw new ApiException(UserErrorCode.USER_NOT_FOUND);
+    }
+
+    UserEntity userEntity = optional.get();
+
+    if (userEntity.getStatus() == UserStatus.ACTIVE) {
+      throw new ApiException(UserErrorCode.ALREADY_VERIFIED_USER);
+    }
+
+    if (!userEntity.getVerifyCode().equals(command.code())) {
+      throw new ApiException(UserErrorCode.INVALID_CODE);
+    }
+
+    userEntity.setStatus(UserStatus.ACTIVE);
+    userEntity.setVerifyCode(null);
+
+    userRepository.save(userEntity);
   }
 }
