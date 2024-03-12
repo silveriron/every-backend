@@ -1,6 +1,7 @@
 package com.every.everybackend.users.service;
 
 import com.every.everybackend.common.adapter.JwtAdapter;
+import com.every.everybackend.common.adapter.MailAdapter;
 import com.every.everybackend.common.exception.ApiException;
 import com.every.everybackend.common.exception.errorcode.UserErrorCode;
 import com.every.everybackend.users.domain.CustomUserDetails;
@@ -30,6 +31,7 @@ public class UserService {
   private final AuthenticationManager authenticationManager;
   private final JwtAdapter jwtAdapter;
   private final CodeGenerator codeGenerator;
+  private final MailAdapter mailAdapter;
 
 
   public void createUser(CreateUserCommand command) {
@@ -44,7 +46,6 @@ public class UserService {
 
     String code = codeGenerator.generateCode(8);
 
-
     UserEntity userEntity = UserEntity.builder()
         .email(command.email())
         .password(encoded)
@@ -57,6 +58,8 @@ public class UserService {
         .build();
 
     userRepository.save(userEntity);
+
+    mailAdapter.sendMail(command.email(), "Every 인증 메일입니다.", "http://localhost:8080/api/users/email-verification?email=" + command.email() + "&code=" + code);
   }
 
   public String login(LoginUserCommand command) {
@@ -68,8 +71,6 @@ public class UserService {
     CustomUserDetails userDetails = (CustomUserDetails) authenticate.getPrincipal();
 
     return jwtAdapter.createToken(userDetails.getUsername());
-
-
   }
 
   public void verifyEmail(EmailVerificationCommand command) {
@@ -81,16 +82,16 @@ public class UserService {
 
     UserEntity userEntity = optional.get();
 
-    if (userEntity.getStatus() == UserStatus.ACTIVE) {
+    if (userEntity.isEmailVerified()) {
       throw new ApiException(UserErrorCode.ALREADY_VERIFIED_USER);
     }
 
-    if (!userEntity.getVerifyCode().equals(command.code())) {
+    if (!userEntity.isVerifiedCode(command.code())) {
       throw new ApiException(UserErrorCode.INVALID_CODE);
     }
 
     userEntity.setStatus(UserStatus.ACTIVE);
-    userEntity.setVerifyCode(null);
+    userEntity.clearVerifyCode();
 
     userRepository.save(userEntity);
   }

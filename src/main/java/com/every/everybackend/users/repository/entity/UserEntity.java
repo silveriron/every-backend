@@ -53,4 +53,16 @@ public class UserEntity {
         this.providerId = providerId;
         this.verifyCode = verifyCode;
     }
+
+    public boolean isEmailVerified() {
+        return this.status == UserStatus.ACTIVE;
+    }
+
+    public boolean isVerifiedCode(String code) {
+        return this.verifyCode.equals(code);
+    }
+
+    public void clearVerifyCode() {
+        this.verifyCode = null;
+    }
 }
