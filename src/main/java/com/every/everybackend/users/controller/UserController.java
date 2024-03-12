@@ -35,7 +35,7 @@ public class UserController {
   }
 
   @GetMapping("/email-verification")
-  public void verifyEmail(
+  public ResponseEntity<Object> verifyEmail(
           @RequestParam("email") String email,
             @RequestParam("code") String code
   ) {
@@ -44,6 +44,7 @@ public class UserController {
 
     userService.verifyEmail(command);
 
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @PostMapping("/password-recovery-code")

@@ -30,7 +30,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http
                                                  ) throws Exception {
-    http.authorizeHttpRequests(requests -> requests.requestMatchers("api/users/signup", "api/users/login").permitAll()
+    http.authorizeHttpRequests(requests -> requests.requestMatchers("api/users/signup", "api/users/login", "/api/users/email-verification").permitAll()
     )
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
