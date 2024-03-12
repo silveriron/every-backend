@@ -1,6 +1,8 @@
 package com.every.everybackend.users.service;
 
 import com.every.everybackend.common.adapter.JwtAdapter;
+import com.every.everybackend.common.exception.ApiException;
+import com.every.everybackend.common.exception.errorcode.UserErrorCode;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.repository.UserRepository;
 import com.every.everybackend.users.repository.entity.UserEntity;
@@ -32,7 +34,7 @@ public class UserService {
     Optional<UserEntity> optional = userRepository.findByEmail(command.email());
 
     if (optional.isPresent()) {
-      throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+      throw new ApiException(UserErrorCode.USER_ALREADY_EXIST);
     }
 
     String encoded = passwordEncoder.encode(command.password());

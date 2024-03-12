@@ -1,6 +1,8 @@
 package com.every.everybackend.common.filter;
 
 import com.every.everybackend.common.adapter.JwtAdapter;
+import com.every.everybackend.common.exception.ApiException;
+import com.every.everybackend.common.exception.errorcode.AuthErrorCode;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.repository.UserRepository;
 import com.every.everybackend.users.repository.entity.UserEntity;
@@ -31,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             String email = jwtAdapter.getEmail(token);
 
-            UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("유효하지 않은 토큰입니다."));
+            UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new ApiException(AuthErrorCode.INVALID_TOKEN));
 
             UserDetails userDetails = new CustomUserDetails(userEntity);
 

@@ -1,0 +1,315 @@
+POST http://localhost:8080/api/users/signup
+Content-Type: application/json
+Content-Length: 76
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "email": "test@test.com",
+  "password": "test1234",
+    "name": "test"
+}
+
+<> 2024-03-12T181525.400.json
+
+###
+
+POST http://localhost:8080/api/users/signup
+Content-Type: application/json
+Content-Length: 79
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "test@test.com",
+  "password": "test1234",
+    "name": "test"
+}
+
+<> 2024-03-12T181510.500.json
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+<> 2024-03-12T180219.200.txt
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+<> 2024-03-12T180040.200.txt
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+<> 2024-03-12T180030.200.txt
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=A468F0EABE1D32C204ED26BD273634B8
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=F3BD18F98DD2353B1BC1A6A42CF0AFCC
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=F3BD18F98DD2353B1BC1A6A42CF0AFCC
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users/signup
+Content-Type: Application/json
+Content-Length: 78
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=2141D57A6024016FE93B4F206CAA5164
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+    "password": "test1234",
+  "name": "test"
+}
+
+###
+
+POST http://localhost:8080/api/users
+Content-Type: Application/json
+Content-Length: 78
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=3599CE23682C4230A8E09226CD23D599
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+    "password": "test1234",
+  "name": "test"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=4415C33278E8DFEBD8F9E6D3EFD73925
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users
+Content-Type: Application/json
+Content-Length: 78
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=4415C33278E8DFEBD8F9E6D3EFD73925
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+    "password": "test1234",
+  "name": "test"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=4415C33278E8DFEBD8F9E6D3EFD73925
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users/login
+Content-Type: Application/json
+Content-Length: 62
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=4415C33278E8DFEBD8F9E6D3EFD73925
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+      "password": "test1234"
+}
+
+###
+
+POST http://localhost:8080/api/users
+Content-Type: Application/json
+Content-Length: 78
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Cookie: JSESSIONID=4415C33278E8DFEBD8F9E6D3EFD73925
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+    "password": "test1234",
+  "name": "test"
+}
+
+###
+
+POST http://localhost:8080/api/users
+Content-Type: Application/json
+Content-Length: 60
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "email": "test@test.com",
+    "password": "test1234"
+}
+
+###
+
