@@ -13,6 +13,7 @@ import com.every.everybackend.users.repository.entity.enums.UserStatus;
 import com.every.everybackend.users.service.command.CreateUserCommand;
 import com.every.everybackend.users.service.command.EmailVerificationCommand;
 import com.every.everybackend.users.service.command.LoginUserCommand;
+import com.every.everybackend.users.service.command.UpdateUserCommand;
 import com.every.everybackend.users.utils.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +33,6 @@ public class UserService {
   private final JwtAdapter jwtAdapter;
   private final CodeGenerator codeGenerator;
   private final MailAdapter mailAdapter;
-
 
   public void createUser(CreateUserCommand command) {
 
@@ -94,5 +94,14 @@ public class UserService {
     userEntity.clearVerifyCode();
 
     userRepository.save(userEntity);
+  }
+
+  public void updateUser(UpdateUserCommand command) {
+
+    UserEntity userEntity = command.userEntity();
+
+    UserEntity updated = userEntity.update(command.name(), command.password(), command.imageUrl());
+
+    userRepository.save(updated);
   }
 }

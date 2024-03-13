@@ -2,14 +2,19 @@ package com.every.everybackend.users.controller;
 
 import com.every.everybackend.users.controller.dto.LoginUserRequest;
 import com.every.everybackend.users.controller.dto.SignupUserRequest;
+import com.every.everybackend.users.controller.dto.UpdateUserRequest;
+import com.every.everybackend.users.domain.CustomUserDetails;
+import com.every.everybackend.users.repository.entity.UserEntity;
 import com.every.everybackend.users.service.UserService;
 import com.every.everybackend.users.service.command.CreateUserCommand;
 import com.every.everybackend.users.service.command.EmailVerificationCommand;
 import com.every.everybackend.users.service.command.LoginUserCommand;
+import com.every.everybackend.users.service.command.UpdateUserCommand;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -65,7 +70,17 @@ public class UserController {
   }
 
   @PutMapping
-  public void updateUser() {}
+  public ResponseEntity<Object> updateUser(@Valid @RequestBody UpdateUserRequest request,
+                                           @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+    UserEntity user = userDetails.getUser();
+
+    UpdateUserCommand command = new UpdateUserCommand(user, request.password(), request.name(), request.imageUrl());
+
+    userService.updateUser(command);
+
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
 
   @DeleteMapping
   public void deleteUser() {}

@@ -31,10 +31,12 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http
                                                  ) throws Exception {
     http.authorizeHttpRequests(requests -> requests.requestMatchers("api/users/signup", "api/users/login", "/api/users/email-verification").permitAll()
+                    .anyRequest().authenticated()
     )
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .formLogin(AbstractHttpConfigurer::disable).addFilterBefore(new JwtAuthenticationFilter(userRepository, jwtAdapter), UsernamePasswordAuthenticationFilter.class);
+            .formLogin(AbstractHttpConfigurer::disable)
+            .addFilterBefore(new JwtAuthenticationFilter(userRepository, jwtAdapter), UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

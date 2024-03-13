@@ -65,4 +65,20 @@ public class UserEntity {
     public void clearVerifyCode() {
         this.verifyCode = null;
     }
+
+    public UserEntity update(String name, String password, String image) {
+        if (name != null) {
+            this.name = name;
+        }
+
+        if (password != null) {
+            this.password = password;
+        }
+
+        if (image != null) {
+            this.image = image;
+        }
+
+        return this;
+    }
 }
