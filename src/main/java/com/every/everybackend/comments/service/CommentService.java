@@ -3,8 +3,11 @@ package com.every.everybackend.comments.service;
 import com.every.everybackend.comments.entity.CommentEntity;
 import com.every.everybackend.comments.repository.CommentRepository;
 import com.every.everybackend.comments.service.command.CreateCommentCommand;
+import com.every.everybackend.comments.service.command.GetCommentsCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +24,10 @@ public class CommentService {
                 .build();
 
         commentRepository.save(commentEntity);
+    }
+
+    public List<CommentEntity> getComments(GetCommentsCommand command) {
+
+        return commentRepository.findAllByPostId(command.postId());
     }
 }
