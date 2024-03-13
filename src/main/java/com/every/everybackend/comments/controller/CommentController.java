@@ -6,6 +6,7 @@ import com.every.everybackend.comments.controller.dto.UpdateCommentRequest;
 import com.every.everybackend.comments.entity.CommentEntity;
 import com.every.everybackend.comments.service.CommentService;
 import com.every.everybackend.comments.service.command.CreateCommentCommand;
+import com.every.everybackend.comments.service.command.DeleteCommentCommand;
 import com.every.everybackend.comments.service.command.GetCommentsCommand;
 import com.every.everybackend.comments.service.command.UpdateCommentCommand;
 import com.every.everybackend.users.domain.CustomUserDetails;
@@ -73,6 +74,19 @@ public class CommentController {
         UpdateCommentCommand command = new UpdateCommentCommand(commentId, postId, request.content(), user);
 
         commentService.updateComment(command);
+    }
+
+    @DeleteMapping("/{postId}/comments/{commentId}")
+    public void deleteComment(
+            @PathVariable(value = "postId") Long postId,
+            @PathVariable(value = "commentId") Long commentId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        UserEntity user = userDetails.getUser();
+
+        DeleteCommentCommand command = new DeleteCommentCommand(commentId, postId, user);
+
+        commentService.deleteComment(command);
     }
 
 }

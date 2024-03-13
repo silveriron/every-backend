@@ -3,15 +3,18 @@ package com.every.everybackend.comments.service;
 import com.every.everybackend.comments.entity.CommentEntity;
 import com.every.everybackend.comments.repository.CommentRepository;
 import com.every.everybackend.comments.service.command.CreateCommentCommand;
+import com.every.everybackend.comments.service.command.DeleteCommentCommand;
 import com.every.everybackend.comments.service.command.GetCommentsCommand;
 import com.every.everybackend.comments.service.command.UpdateCommentCommand;
 import com.every.everybackend.common.exception.ApiException;
 import com.every.everybackend.common.exception.errorcode.CommentErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -29,6 +32,7 @@ public class CommentService {
         commentRepository.save(commentEntity);
     }
 
+    @Transactional(readOnly = true)
     public List<CommentEntity> getComments(GetCommentsCommand command) {
 
         return commentRepository.findAllByPostId(command.postId());
@@ -42,5 +46,9 @@ public class CommentService {
         commentEntity.update(command.content());
 
         commentRepository.save(commentEntity);
+    }
+
+    public void deleteComment(DeleteCommentCommand command) {
+        commentRepository.deleteByIdAndPostIdAndUser(command.commentId(), command.postId(), command.user());
     }
 }
