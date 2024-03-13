@@ -10,10 +10,7 @@ import com.every.everybackend.users.repository.entity.UserEntity;
 import com.every.everybackend.users.repository.entity.enums.UserProvider;
 import com.every.everybackend.users.repository.entity.enums.UserRole;
 import com.every.everybackend.users.repository.entity.enums.UserStatus;
-import com.every.everybackend.users.service.command.CreateUserCommand;
-import com.every.everybackend.users.service.command.EmailVerificationCommand;
-import com.every.everybackend.users.service.command.LoginUserCommand;
-import com.every.everybackend.users.service.command.UpdateUserCommand;
+import com.every.everybackend.users.service.command.*;
 import com.every.everybackend.users.utils.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -103,5 +100,22 @@ public class UserService {
     UserEntity updated = userEntity.update(command.name(), command.password(), command.imageUrl());
 
     userRepository.save(updated);
+  }
+
+  public void sendPasswordRecoveryCode(SendPasswordRecoveryCodeCommand command) {
+
+    Optional<UserEntity> optional = userRepository.findByEmail(command.email());
+
+    if (optional.isEmpty()) {
+      throw new ApiException(UserErrorCode.USER_NOT_FOUND);
+    }
+
+    UserEntity userEntity = optional.get();
+
+    String code = codeGenerator.generateCode(8);
+
+    userRepository.save(userEntity);
+
+    mailAdapter.sendMail(command.email(), "Every 비밀번호 찾기 코드입니다.", code);
   }
 }

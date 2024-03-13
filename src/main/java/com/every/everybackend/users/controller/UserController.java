@@ -1,15 +1,10 @@
 package com.every.everybackend.users.controller;
 
-import com.every.everybackend.users.controller.dto.LoginUserRequest;
-import com.every.everybackend.users.controller.dto.SignupUserRequest;
-import com.every.everybackend.users.controller.dto.UpdateUserRequest;
+import com.every.everybackend.users.controller.dto.*;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.repository.entity.UserEntity;
 import com.every.everybackend.users.service.UserService;
-import com.every.everybackend.users.service.command.CreateUserCommand;
-import com.every.everybackend.users.service.command.EmailVerificationCommand;
-import com.every.everybackend.users.service.command.LoginUserCommand;
-import com.every.everybackend.users.service.command.UpdateUserCommand;
+import com.every.everybackend.users.service.command.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,7 +35,7 @@ public class UserController {
   }
 
   @GetMapping("/email-verification")
-  public ResponseEntity<Object> verifyEmail(
+  public void verifyEmail(
           @RequestParam("email") String email,
             @RequestParam("code") String code
   ) {
@@ -48,15 +43,18 @@ public class UserController {
     EmailVerificationCommand command = new EmailVerificationCommand(email, code);
 
     userService.verifyEmail(command);
-
-    return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @PostMapping("/password-recovery-code")
-  public void sendPasswordRecoveryCode() {}
+  public void sendPasswordRecoveryCode(@Valid @RequestBody SendPasswordRecoveryCodeRequest request) {
+
+    SendPasswordRecoveryCodeCommand command = new SendPasswordRecoveryCodeCommand(request.email());
+
+    userService.sendPasswordRecoveryCode(command);
+  }
 
   @PostMapping("/reset-password")
-  public void resetPassword() {}
+  public void resetPassword(@Valid @RequestBody ResetPasswordRequest request) {}
 
   @PostMapping("/login")
   public String login(
@@ -70,7 +68,7 @@ public class UserController {
   }
 
   @PutMapping
-  public ResponseEntity<Object> updateUser(@Valid @RequestBody UpdateUserRequest request,
+  public void updateUser(@Valid @RequestBody UpdateUserRequest request,
                                            @AuthenticationPrincipal CustomUserDetails userDetails) {
 
     UserEntity user = userDetails.getUser();
@@ -78,8 +76,6 @@ public class UserController {
     UpdateUserCommand command = new UpdateUserCommand(user, request.password(), request.name(), request.imageUrl());
 
     userService.updateUser(command);
-
-    return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @DeleteMapping
