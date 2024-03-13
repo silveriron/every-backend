@@ -3,10 +3,12 @@ package com.every.everybackend.common.adapter;
 import com.every.everybackend.common.exception.ApiException;
 import com.every.everybackend.common.exception.errorcode.AuthErrorCode;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -15,9 +17,16 @@ import java.util.Date;
 @Component
 public class JwtAdapterImp implements JwtAdapter{
 
-    private final SecretKey key = Jwts.SIG.HS256.key().build();
+    @Value("${jwt.secret}")
+    private String key;
     @Value("${jwt.expiration-time}")
     private long expirationTime;
+
+    private SecretKey secretKey() {
+        byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
 
     @Override
     public String createToken(String email) {
@@ -28,7 +37,7 @@ public class JwtAdapterImp implements JwtAdapter{
         return Jwts.builder()
                 .subject(email)
                 .expiration(expiration)
-                .signWith(key)
+                .signWith(secretKey())
                 .compact();
     }
 
@@ -36,7 +45,7 @@ public class JwtAdapterImp implements JwtAdapter{
     public String getEmail(String token) {
         try {
             return Jwts.parser()
-                    .verifyWith(key)
+                    .verifyWith(secretKey())
                     .build()
                     .parseSignedClaims(token).getPayload().getSubject();
 

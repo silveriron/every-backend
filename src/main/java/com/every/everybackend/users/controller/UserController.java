@@ -2,7 +2,7 @@ package com.every.everybackend.users.controller;
 
 import com.every.everybackend.users.controller.dto.*;
 import com.every.everybackend.users.domain.CustomUserDetails;
-import com.every.everybackend.users.repository.entity.UserEntity;
+import com.every.everybackend.users.entity.UserEntity;
 import com.every.everybackend.users.service.UserService;
 import com.every.everybackend.users.service.command.*;
 import jakarta.validation.Valid;

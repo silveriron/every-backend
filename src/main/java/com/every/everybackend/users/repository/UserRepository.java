@@ -1,6 +1,6 @@
 package com.every.everybackend.users.repository;
 
-import com.every.everybackend.users.repository.entity.UserEntity;
+import com.every.everybackend.users.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

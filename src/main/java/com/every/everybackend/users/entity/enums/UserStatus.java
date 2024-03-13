@@ -1,4 +1,4 @@
-package com.every.everybackend.users.repository.entity.enums;
+package com.every.everybackend.users.entity.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package com.every.everybackend.users.repository.entity;
+package com.every.everybackend.users.entity;
 
-import com.every.everybackend.users.repository.entity.enums.UserProvider;
-import com.every.everybackend.users.repository.entity.enums.UserRole;
-import com.every.everybackend.users.repository.entity.enums.UserStatus;
+import com.every.everybackend.users.entity.enums.UserProvider;
+import com.every.everybackend.users.entity.enums.UserRole;
+import com.every.everybackend.users.entity.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;

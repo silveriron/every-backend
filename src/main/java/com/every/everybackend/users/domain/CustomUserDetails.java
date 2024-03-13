@@ -1,7 +1,7 @@
 package com.every.everybackend.users.domain;
 
-import com.every.everybackend.users.repository.entity.UserEntity;
-import com.every.everybackend.users.repository.entity.enums.UserStatus;
+import com.every.everybackend.users.entity.UserEntity;
+import com.every.everybackend.users.entity.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
