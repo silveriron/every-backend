@@ -1,8 +1,13 @@
-package com.every.everybackend.posts.controller.dto;
+package com.every.everybackend.posts.controller;
 
+import com.every.everybackend.posts.controller.dto.CreatePostRequest;
+import com.every.everybackend.posts.controller.dto.PostPageResponse;
+import com.every.everybackend.posts.controller.dto.PostResponse;
+import com.every.everybackend.posts.controller.dto.UpdatePostRequest;
 import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.service.PostService;
 import com.every.everybackend.posts.service.command.CreatePostCommand;
+import com.every.everybackend.posts.service.command.UpdatePostCommand;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.entity.UserEntity;
 import jakarta.validation.Valid;
@@ -60,5 +65,18 @@ public class PostController {
         return ResponseEntity.ok(postPageResponse.posts());
     }
 
+    @PutMapping("/{id}")
+    public void updatePost(
+            @PathVariable(value = "id") Long id,
+            @Valid
+            @RequestBody UpdatePostRequest request,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        UserEntity user = userDetails.getUser();
+
+        UpdatePostCommand command = new UpdatePostCommand(id, request.title(), request.content(), user);
+
+        postService.updatePost(command);
+    }
 
 }

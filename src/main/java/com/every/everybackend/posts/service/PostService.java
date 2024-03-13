@@ -5,6 +5,7 @@ import com.every.everybackend.common.exception.errorcode.PostErrorCode;
 import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.repository.PostRepository;
 import com.every.everybackend.posts.service.command.CreatePostCommand;
+import com.every.everybackend.posts.service.command.UpdatePostCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,5 +36,13 @@ public class PostService {
 
     public PostEntity getPost(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new ApiException(PostErrorCode.NOT_FOUND_POST));
+    }
+
+    public void updatePost(UpdatePostCommand command) {
+        PostEntity post = postRepository.findByIdAndAuthor(command.id(), command.user()).orElseThrow(() -> new ApiException(PostErrorCode.NOT_FOUND_POST));
+
+        post.update(command.newTitle(), command.newContent());
+
+        postRepository.save(post);
     }
 }
