@@ -6,6 +6,7 @@ import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.repository.PostRepository;
 import com.every.everybackend.posts.service.command.CreatePostCommand;
 import com.every.everybackend.posts.service.command.UpdatePostCommand;
+import com.every.everybackend.users.service.command.DeletePostCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,5 +45,12 @@ public class PostService {
         post.update(command.newTitle(), command.newContent());
 
         postRepository.save(post);
+    }
+
+    public void deletePost(DeletePostCommand command) {
+
+        PostEntity post = postRepository.findByIdAndAuthor(command.id(), command.user()).orElseThrow(() -> new ApiException(PostErrorCode.NOT_FOUND_POST));
+
+        postRepository.delete(post);
     }
 }

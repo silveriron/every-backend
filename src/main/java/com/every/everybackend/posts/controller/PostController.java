@@ -10,6 +10,7 @@ import com.every.everybackend.posts.service.command.CreatePostCommand;
 import com.every.everybackend.posts.service.command.UpdatePostCommand;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.entity.UserEntity;
+import com.every.everybackend.users.service.command.DeletePostCommand;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -79,4 +80,12 @@ public class PostController {
         postService.updatePost(command);
     }
 
+    @DeleteMapping("/{id}")
+    public void deletePost(@PathVariable(value = "id") Long id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        UserEntity user = userDetails.getUser();
+
+        DeletePostCommand command = new DeletePostCommand(id, user);
+
+        postService.deletePost(command);
+    }
 }
