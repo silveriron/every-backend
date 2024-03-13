@@ -54,7 +54,12 @@ public class UserController {
   }
 
   @PostMapping("/reset-password")
-  public void resetPassword(@Valid @RequestBody ResetPasswordRequest request) {}
+  public void resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+
+        ResetPasswordCommand command = new ResetPasswordCommand(request.email(), request.verifyCode(), request.newPassword());
+
+        userService.resetPassword(command);
+  }
 
   @PostMapping("/login")
   public String login(

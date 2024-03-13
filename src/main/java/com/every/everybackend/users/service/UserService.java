@@ -114,8 +114,32 @@ public class UserService {
 
     String code = codeGenerator.generateCode(8);
 
+    userEntity.setVerifyCode(code);
+
     userRepository.save(userEntity);
 
     mailAdapter.sendMail(command.email(), "Every 비밀번호 찾기 코드입니다.", code);
+  }
+
+  public void resetPassword(ResetPasswordCommand command) {
+
+        Optional<UserEntity> optional = userRepository.findByEmail(command.email());
+
+        if (optional.isEmpty()) {
+        throw new ApiException(UserErrorCode.USER_NOT_FOUND);
+        }
+
+        UserEntity userEntity = optional.get();
+
+        if (!userEntity.isVerifiedCode(command.verifyCode())) {
+        throw new ApiException(UserErrorCode.INVALID_CODE);
+        }
+
+        String encoded = passwordEncoder.encode(command.newPassword());
+
+        userEntity.setPassword(encoded);
+        userEntity.clearVerifyCode();
+
+        userRepository.save(userEntity);
   }
 }
