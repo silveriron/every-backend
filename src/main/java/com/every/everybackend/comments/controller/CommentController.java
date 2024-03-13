@@ -2,10 +2,12 @@ package com.every.everybackend.comments.controller;
 
 import com.every.everybackend.comments.controller.dto.CommentResponse;
 import com.every.everybackend.comments.controller.dto.CreateCommentRequest;
+import com.every.everybackend.comments.controller.dto.UpdateCommentRequest;
 import com.every.everybackend.comments.entity.CommentEntity;
 import com.every.everybackend.comments.service.CommentService;
 import com.every.everybackend.comments.service.command.CreateCommentCommand;
 import com.every.everybackend.comments.service.command.GetCommentsCommand;
+import com.every.everybackend.comments.service.command.UpdateCommentCommand;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.entity.UserEntity;
 import jakarta.validation.Valid;
@@ -57,7 +59,20 @@ public class CommentController {
 
 
         return ResponseEntity.ok(commentResponses);
+    }
 
+    @PutMapping("/{postId}/comments/{commentId}")
+    public void updateComment(
+            @PathVariable(value = "postId") Long postId,
+            @PathVariable(value = "commentId") Long commentId,
+            @Valid @RequestBody UpdateCommentRequest request,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        UserEntity user = userDetails.getUser();
+
+        UpdateCommentCommand command = new UpdateCommentCommand(commentId, postId, request.content(), user);
+
+        commentService.updateComment(command);
     }
 
 }
