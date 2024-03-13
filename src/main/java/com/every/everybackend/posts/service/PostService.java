@@ -5,6 +5,7 @@ import com.every.everybackend.common.exception.errorcode.PostErrorCode;
 import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.repository.PostRepository;
 import com.every.everybackend.posts.service.command.CreatePostCommand;
+import com.every.everybackend.posts.service.command.GetPostCommand;
 import com.every.everybackend.posts.service.command.UpdatePostCommand;
 import com.every.everybackend.users.service.command.DeletePostCommand;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +36,8 @@ public class PostService {
 
     }
 
-    public PostEntity getPost(Long id) {
-        return postRepository.findById(id).orElseThrow(() -> new ApiException(PostErrorCode.NOT_FOUND_POST));
+    public PostEntity getPost(GetPostCommand command) {
+        return postRepository.findById(command.id()).orElseThrow(() -> new ApiException(PostErrorCode.NOT_FOUND_POST));
     }
 
     public void updatePost(UpdatePostCommand command) {
