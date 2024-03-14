@@ -51,7 +51,8 @@ public class UserService {
         .role(UserRole.USER)
         .status(UserStatus.UNVERIFIED)
         .provider(UserProvider.EMAIL)
-        .providerId(null).verifyCode(code)
+        .providerId(null)
+        .verifyCode(code)
         .build();
 
     userRepository.save(userEntity);
