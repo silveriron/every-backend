@@ -7,7 +7,7 @@ import com.every.everybackend.postlikes.service.command.LikePostCommand;
 import com.every.everybackend.postlikes.service.command.UnlikePostCommand;
 import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.service.PostService;
-import com.every.everybackend.posts.service.command.GetPostCommand;
+import com.every.everybackend.posts.service.command.GetPostsCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,12 +41,10 @@ public class PostLikeService {
         List<PostLikeEntity> postLikeEntities = postLikeRepository.findAllByUserId(command.user().getId());
 
 
-        return postLikeEntities.stream().map(postLikes -> {
-            GetPostCommand getPostCommand = new GetPostCommand(postLikes.getPostId());
+        List<Long> postIds = postLikeEntities.stream().map(PostLikeEntity::getPostId).toList();
 
-            return postService.getPost(getPostCommand);
-        }).toList();
+        GetPostsCommand getPostsCommand = new GetPostsCommand(postIds);
 
-
+        return postService.getPosts(getPostsCommand);
     }
 }

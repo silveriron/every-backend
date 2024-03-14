@@ -6,6 +6,7 @@ import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.repository.PostRepository;
 import com.every.everybackend.posts.service.command.CreatePostCommand;
 import com.every.everybackend.posts.service.command.GetPostCommand;
+import com.every.everybackend.posts.service.command.GetPostsCommand;
 import com.every.everybackend.posts.service.command.UpdatePostCommand;
 import com.every.everybackend.users.service.command.DeletePostCommand;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional
 @Service
@@ -45,6 +48,11 @@ public class PostService {
         postEntity.addViews();
 
         return postRepository.save(postEntity);
+    }
+
+    public List<PostEntity> getPosts(GetPostsCommand command) {
+
+        return postRepository.findAllById(command.ids());
     }
 
     public void updatePost(UpdatePostCommand command) {

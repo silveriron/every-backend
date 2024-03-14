@@ -58,9 +58,11 @@ public class PostLikeController {
 
         List<PostResponse> postResponseList = posts.stream().map(post -> PostResponse.builder()
                 .id(post.getId())
+                .title(post.getTitle())
                 .content(post.getContent())
                 .authorName(post.getAuthor().getName())
                 .authorImageUrl(post.getAuthor().getImage())
+                .views(post.getViews())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .build()).toList();
