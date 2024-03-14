@@ -7,6 +7,7 @@ import com.every.everybackend.posts.controller.dto.UpdatePostRequest;
 import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.service.PostService;
 import com.every.everybackend.posts.service.command.CreatePostCommand;
+import com.every.everybackend.posts.service.command.GetPostCommand;
 import com.every.everybackend.posts.service.command.UpdatePostCommand;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.entity.UserEntity;
@@ -47,7 +48,10 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable(value = "id") Long id) {
-        PostEntity post = postService.getPost(id);
+
+        GetPostCommand command = new GetPostCommand(id);
+
+        PostEntity post = postService.getPost(command);
         return ResponseEntity.ok(new PostResponse(post.getId(), post.getTitle(), post.getContent(), post.getAuthor().getName(), post.getAuthor().getImage(), post.getCreatedAt(), post.getUpdatedAt()));
     }
 
