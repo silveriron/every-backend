@@ -142,4 +142,9 @@ public class UserService {
 
         userRepository.save(userEntity);
   }
+
+    public UserEntity findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND));
+    }
 }
