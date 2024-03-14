@@ -2,15 +2,15 @@ package com.every.everybackend.subcribes.controller;
 
 import com.every.everybackend.subcribes.service.SubscribeService;
 import com.every.everybackend.subcribes.service.command.CreateSubscribeCommand;
+import com.every.everybackend.subcribes.service.command.DeleteSubscribeCommand;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
+@Transactional
 @RestController
 @RequestMapping("/api/subscriptions")
 @RequiredArgsConstructor
@@ -28,5 +28,17 @@ public class SubscribeController {
         CreateSubscribeCommand command = new CreateSubscribeCommand(authorId, user);
 
         subscribeService.subscribe(command);
+    }
+
+    @DeleteMapping("/{authorId}")
+    public void unsubscribe(@PathVariable(value = "authorId") Long authorId,
+                            @AuthenticationPrincipal CustomUserDetails userDetails
+                            ) {
+
+        UserEntity user = userDetails.getUser();
+
+        DeleteSubscribeCommand command = new DeleteSubscribeCommand(authorId, user);
+
+        subscribeService.unsubscribe(command);
     }
 }
