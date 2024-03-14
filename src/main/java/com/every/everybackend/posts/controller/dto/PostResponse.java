@@ -11,6 +11,7 @@ public record PostResponse(
         String content,
         String authorName,
         String authorImageUrl,
+        Long views,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {

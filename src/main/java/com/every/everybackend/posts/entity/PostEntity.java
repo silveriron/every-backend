@@ -26,6 +26,7 @@ public class PostEntity {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private UserEntity author;
+    private Long views;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -41,5 +42,9 @@ public class PostEntity {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void addViews() {
+        this.views++;
     }
 }

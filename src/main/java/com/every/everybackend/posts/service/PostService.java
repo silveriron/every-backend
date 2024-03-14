@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -30,6 +32,7 @@ public class PostService {
         postRepository.save(postEntity);
     }
 
+    @Transactional(readOnly = true)
     public Page<PostEntity> getAllPosts(PageRequest pageRequest) {
 
         return postRepository.findAll(pageRequest);
@@ -37,7 +40,11 @@ public class PostService {
     }
 
     public PostEntity getPost(GetPostCommand command) {
-        return postRepository.findById(command.id()).orElseThrow(() -> new ApiException(PostErrorCode.NOT_FOUND_POST));
+        PostEntity postEntity = postRepository.findById(command.id()).orElseThrow(() -> new ApiException(PostErrorCode.NOT_FOUND_POST));
+
+        postEntity.addViews();
+
+        return postRepository.save(postEntity);
     }
 
     public void updatePost(UpdatePostCommand command) {

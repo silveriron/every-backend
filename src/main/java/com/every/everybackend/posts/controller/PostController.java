@@ -52,7 +52,7 @@ public class PostController {
         GetPostCommand command = new GetPostCommand(id);
 
         PostEntity post = postService.getPost(command);
-        return ResponseEntity.ok(new PostResponse(post.getId(), post.getTitle(), post.getContent(), post.getAuthor().getName(), post.getAuthor().getImage(), post.getCreatedAt(), post.getUpdatedAt()));
+        return ResponseEntity.ok(new PostResponse(post.getId(), post.getTitle(), post.getContent(), post.getAuthor().getName(), post.getAuthor().getImage(), post.getViews(),post.getCreatedAt(), post.getUpdatedAt()));
     }
 
     @GetMapping
@@ -63,7 +63,7 @@ public class PostController {
 
         Page<PostEntity> allPosts = postService.getAllPosts(PageRequest.of(page, size));
 
-        List<PostResponse> list = allPosts.stream().map(it -> new PostResponse(it.getId(), it.getTitle(), it.getContent(), it.getAuthor().getName(), it.getAuthor().getImage(), it.getCreatedAt(), it.getUpdatedAt())).toList();
+        List<PostResponse> list = allPosts.stream().map(it -> new PostResponse(it.getId(), it.getTitle(), it.getContent(), it.getAuthor().getName(), it.getAuthor().getImage(), it.getViews(), it.getCreatedAt(), it.getUpdatedAt())).toList();
 
         PostPageResponse postPageResponse = new PostPageResponse(list, allPosts.getTotalPages(), allPosts.getTotalElements(), allPosts.getNumber(), allPosts.hasNext(), allPosts.hasPrevious());
 
