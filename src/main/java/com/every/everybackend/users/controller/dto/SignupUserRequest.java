@@ -1,9 +1,14 @@
 package com.every.everybackend.users.controller.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record SignupUserRequest(
-   String email,
-    String password,
-    String name,
-   String imageUrl
+        @NotBlank
+        String email,
+        @NotBlank
+        String password,
+        @NotBlank
+        String name,
+        String imageUrl
 ) {
 }
