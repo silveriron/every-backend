@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,6 +24,12 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
     public ResponseEntity<ErrorResponse> exception(InternalAuthenticationServiceException e) {
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(new ErrorResponse(UserErrorCode.INVALID_CREDENTIALS), HttpStatusCode.valueOf(UserErrorCode.INVALID_CREDENTIALS.getStatus()));
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponse> exception(BadCredentialsException e) {
         log.error(e.getMessage(), e);
         return new ResponseEntity<>(new ErrorResponse(UserErrorCode.INVALID_CREDENTIALS), HttpStatusCode.valueOf(UserErrorCode.INVALID_CREDENTIALS.getStatus()));
     }
