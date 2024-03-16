@@ -4,10 +4,7 @@ import com.every.everybackend.common.exception.ApiException;
 import com.every.everybackend.common.exception.errorcode.PostErrorCode;
 import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.repository.PostRepository;
-import com.every.everybackend.posts.service.command.CreatePostCommand;
-import com.every.everybackend.posts.service.command.GetPostCommand;
-import com.every.everybackend.posts.service.command.GetPostsCommand;
-import com.every.everybackend.posts.service.command.UpdatePostCommand;
+import com.every.everybackend.posts.service.command.*;
 import com.every.everybackend.users.service.command.DeletePostCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,7 +33,9 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PostEntity> getAllPosts(PageRequest pageRequest) {
+    public Page<PostEntity> getAllPosts(GetAllPostsCommand command) {
+
+        PageRequest pageRequest = PageRequest.of(command.page(), command.size());
 
         return postRepository.findAll(pageRequest);
 

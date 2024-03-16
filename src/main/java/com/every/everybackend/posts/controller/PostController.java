@@ -7,6 +7,7 @@ import com.every.everybackend.posts.controller.dto.UpdatePostRequest;
 import com.every.everybackend.posts.entity.PostEntity;
 import com.every.everybackend.posts.service.PostService;
 import com.every.everybackend.posts.service.command.CreatePostCommand;
+import com.every.everybackend.posts.service.command.GetAllPostsCommand;
 import com.every.everybackend.posts.service.command.GetPostCommand;
 import com.every.everybackend.posts.service.command.UpdatePostCommand;
 import com.every.everybackend.users.domain.CustomUserDetails;
@@ -15,7 +16,6 @@ import com.every.everybackend.users.service.command.DeletePostCommand;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -61,7 +61,9 @@ public class PostController {
             @RequestParam(defaultValue = "10", value = "size") int size
     ) {
 
-        Page<PostEntity> allPosts = postService.getAllPosts(PageRequest.of(page, size));
+        GetAllPostsCommand command = new GetAllPostsCommand(page, size);
+
+        Page<PostEntity> allPosts = postService.getAllPosts(command);
 
         List<PostResponse> list = allPosts.stream().map(it -> new PostResponse(it.getId(), it.getTitle(), it.getContent(), it.getAuthor().getName(), it.getAuthor().getImage(), it.getViews(), it.getCreatedAt(), it.getUpdatedAt())).toList();
 

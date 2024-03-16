@@ -37,6 +37,7 @@ public class PostEntity {
         this.title = title;
         this.content = content;
         this.author = author;
+        this.views = 0L;
     }
 
     public void update(String title, String content) {
