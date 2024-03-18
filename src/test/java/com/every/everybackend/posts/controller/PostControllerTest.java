@@ -36,7 +36,6 @@ class PostControllerTest extends MvcTest {
 
   @BeforeEach
   void setUp() {
-
     UserEntity userEntity = UserEntity.builder()
         .email("test@test.com")
         .name("test")
@@ -84,7 +83,11 @@ class PostControllerTest extends MvcTest {
   @WithUserDetails(value = "test@test.com", userDetailsServiceBeanName = "customUserDetailsService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
   void getPost() throws Exception {
     // given
-    Long id = 1L;
+
+    List<PostEntity> postEntities = postRepository.findAll();
+
+    Long id = postEntities.get(0).getId();
+
 
     // when
     mockMvc.perform(
@@ -135,7 +138,9 @@ class PostControllerTest extends MvcTest {
   @WithUserDetails(value = "test@test.com", userDetailsServiceBeanName = "customUserDetailsService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
   void updatePost() throws Exception {
     // given
-    Long id = 1L;
+    List<PostEntity> postEntities = postRepository.findAll();
+
+    Long id = postEntities.get(0).getId();
     String title = "updated title";
     String content = "updated content";
 
@@ -181,7 +186,9 @@ class PostControllerTest extends MvcTest {
   @WithUserDetails(value = "test@test.com", userDetailsServiceBeanName = "customUserDetailsService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
   void deletePost() throws Exception {
     // given
-    Long id = 1L;
+    List<PostEntity> postEntities = postRepository.findAll();
+
+    Long id = postEntities.get(0).getId();
 
     // when
     mockMvc.perform(
