@@ -2,7 +2,6 @@ package com.every.everybackend.common.adapter;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,13 +11,18 @@ import org.springframework.stereotype.Component;
 
 @Async
 @Component
-@RequiredArgsConstructor
 @Profile("!test")
 public class MailAdapterImp implements MailAdapter {
 
     private final JavaMailSender javaMailSender;
-    @Value("${spring.mail.username}")
-    private String from;
+    private final String from;
+
+    public MailAdapterImp(JavaMailSender javaMailSender,
+                          @Value("${spring.mail.username}")
+                          String from) {
+        this.javaMailSender = javaMailSender;
+        this.from = from;
+    }
 
     @Override
     public void sendMail(String to, String subject, String text) {

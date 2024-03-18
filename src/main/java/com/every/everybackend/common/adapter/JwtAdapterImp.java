@@ -17,10 +17,17 @@ import java.util.Date;
 @Component
 public class JwtAdapterImp implements JwtAdapter{
 
-    @Value("${jwt.secret}")
-    private String key;
-    @Value("${jwt.expiration-time}")
-    private long expirationTime;
+    private final String key;
+    private final long expirationTime;
+
+    public JwtAdapterImp(
+            @Value("${jwt.secret}")
+            String key,
+            @Value("${jwt.expiration-time}")
+            long expirationTime) {
+        this.key = key;
+        this.expirationTime = expirationTime;
+    }
 
     private SecretKey secretKey() {
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
