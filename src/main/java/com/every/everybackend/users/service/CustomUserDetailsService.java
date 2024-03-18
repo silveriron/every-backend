@@ -1,6 +1,5 @@
 package com.every.everybackend.users.service;
 
-import com.every.everybackend.common.exception.ApiException;
 import com.every.everybackend.common.exception.errorcode.UserErrorCode;
 import com.every.everybackend.users.domain.CustomUserDetails;
 import com.every.everybackend.users.entity.UserEntity;
@@ -23,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         Optional<UserEntity> existUser = userRepository.findByEmail(email);
 
         if (existUser.isEmpty()) {
-            throw new ApiException(UserErrorCode.USER_NOT_FOUND);
+            throw new UsernameNotFoundException(UserErrorCode.USER_NOT_FOUND.getMessage());
         }
 
         return new CustomUserDetails(existUser.get());
