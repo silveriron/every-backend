@@ -70,8 +70,12 @@ class PostRepositoryTest extends RepositoryTest {
     // given
     UserEntity userEntity = userRepository.findByEmail("test@test.com").orElseThrow();
 
+    List<PostEntity> postEntities = postRepository.findAll();
+
+    Long postId = postEntities.get(0).getId();
+
     // when
-    var post = postRepository.findByIdAndAuthor(1L, userEntity);
+    var post = postRepository.findByIdAndAuthor(postId, userEntity);
 
     // then
     assertTrue(post.isPresent());
