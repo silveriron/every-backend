@@ -1,0 +1,116 @@
+= Every REST Docs
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:seclinks:
+
+
+== 인증
+[source,http,options="nowrap"]
+----
+Header
+Authorization: Bearer {access_token}
+----
+
+== User API
+
+=== 회원가입
+operation::users-signup/success[snippets='http-request,http-response']
+
+=== 회원가입 (중복 이메일)
+operation::users-signup/duplicate-email[snippets='http-request,http-response']
+
+=== 회원가입 이메일 인증
+operation::users-verify-email/success[snippets='http-request,http-response']
+
+=== 회원가입 이메일 인증 (존재하지 않는 사용자)
+operation::users-verify-email/not-found-user[snippets='http-request,http-response']
+
+=== 회원가입 인증 이메일 발송 (잘못된 코드)
+operation::users-verify-email/wrong-code[snippets='http-request,http-response']
+
+=== 로그인
+operation::users-login/success[snippets='http-request,http-response']
+
+=== 로그인 (사용자 없음)
+operation::users-login/not-found-user[snippets='http-request,http-response']
+
+=== 로그인 (비밀번호 오류)
+operation::users-login/wrong-password[snippets='http-request,http-response']
+
+=== 비밀번호 초기화 이메일 전송
+operation::users-send-password-recovery-code/success[snippets='http-request,http-response']
+
+=== 비밀번호 초기화 이메일 전송 (사용자 없음)
+operation::users-send-password-recovery-code/not-found-user[snippets='http-request,http-response']
+
+=== 비밀번호 초기화
+operation::users-reset-password/success[snippets='http-request,http-response']
+
+=== 비밀번호 초기화 (사용자 없음)
+operation::users-reset-password/not-found-user[snippets='http-request,http-response']
+
+=== 비밀번호 초기화 (잘못된 코드)
+operation::users-reset-password/wrong-verify-code[snippets='http-request,http-response']
+
+=== 사용자 정보 변경
+operation::users-update/success[snippets='http-request,http-response']
+
+== Post API
+
+=== 게시글 작성
+operation::post-create/success[snippets='http-request,http-response']
+
+=== 게시글 전체 조회 (페이징)
+operation::post-get-all/success[snippets='http-request,http-response']
+
+=== 게시글 상세 조회
+operation::post-get/success[snippets='http-request,http-response']
+
+=== 게시글 수정
+operation::post-update/success[snippets='http-request,http-response']
+
+=== 게시글 삭제
+operation::post-delete/success[snippets='http-request,http-response']
+
+== Comment API
+
+=== 댓글 작성
+operation::comment-create/success[snippets='http-request,http-response']
+
+=== 댓글 조회
+operation::comment-get/success[snippets='http-request,http-response']
+
+=== 댓글 수정
+operation::comment-update/success[snippets='http-request,http-response']
+
+=== 댓글 삭제
+operation::comment-delete/success[snippets='http-request,http-response']
+
+== Like API
+
+=== 좋아요
+operation::post-like[snippets='http-request,http-response']
+
+=== 좋아요 취소
+operation::post-unlike[snippets='http-request,http-response']
+
+=== 좋아요한 글 조회
+operation::get-likes[snippets='http-request,http-response']
+
+== Subscribe API
+
+=== 구독
+operation::subscribe/success[snippets='http-request,http-response']
+
+=== 구독 취소
+operation::unsubscribe/success[snippets='http-request,http-response']
+
+
+
+
+
+
+
+
