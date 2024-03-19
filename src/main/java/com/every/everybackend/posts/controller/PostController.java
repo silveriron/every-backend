@@ -56,7 +56,7 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getAllPosts(
+    public ResponseEntity<PostPageResponse> getAllPosts(
             @RequestParam(defaultValue = "0", value = "page") int page,
             @RequestParam(defaultValue = "10", value = "size") int size
     ) {
@@ -69,7 +69,7 @@ public class PostController {
 
         PostPageResponse postPageResponse = new PostPageResponse(list, allPosts.getTotalPages(), allPosts.getTotalElements(), allPosts.getNumber(), allPosts.hasNext(), allPosts.hasPrevious());
 
-        return ResponseEntity.ok(postPageResponse.posts());
+        return ResponseEntity.ok(postPageResponse);
     }
 
     @PutMapping("/{id}")
